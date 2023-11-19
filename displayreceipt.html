@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receipt Information</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 10px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .receipt-section {
+      border: 1px solid #ccc;
+      padding: 1px;
+      margin-bottom: 1px;
+    }
+
+    .item {
+      margin-bottom: 1px;
+    }
+
+    .discount {
+      color: green;
+    }
+
+    .amount, .payment {
+      margin-top: 1px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src=" https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js "></script>
+  <script>
+    $(document).ready(function() {
+      // File input change event
+      $('#fileInput').on('change', function(e) {
+        var file = e.target.files[0];
+
+        if (file) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            var xmlString = e.target.result;
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+
+            // Process XML data and display it on the page
+            displayReceipt(xmlDoc);
+          };
+
+          reader.readAsText(file);
+        }
+      });
+
+      function displayReceipt(xml) {
+        // Branch Information
+        var branchName = $(xml).find("branchName").text();
+        var branchPhoneNumber = $(xml).find("branchPhoneNumber").text();
+        $(".branch-information").html(`<h2>Branch Information</h2><p>Branch Name: ${branchName}</p><p>Branch Phone Number: ${branchPhoneNumber}</p>`);
+
+        // Items Purchased
+        var itemsHtml = "<h2>Items Purchased</h2>";
+        itemsHtml += '<table style="width:300px"><thead><tr><th>Name</th><th>Quantity</th><th>Price</th></tr></thead><tbody>';
+        $(xml).find("Item").each(function() {
+          var itemName = $(this).find("itemName").text();
+          var itemQuantity = $(this).find("itemQuantity").text();
+          var itemPrice = $(this).find("itemPrice").text();
+          itemsHtml += `<tr><td>${itemName}</td><td>${itemQuantity}</td><td>${itemPrice*itemQuantity}</td></tr>`;
+        });
+        itemsHtml += "</tbody></table>";
+        $(".items-purchased").html(itemsHtml);
+
+        // Discounts
+        var discountsHtml = "<h2>Discounts</h2>";
+        discountsHtml += '<table><thead><tr><th>Discount Name</th><th>Discount Price</th></tr></thead><tbody>';
+        $(xml).find("Discounts").each(function() {
+            var discountName = $(this).find("discountName").text();
+            var discountPrice = $(this).find("discountPrice").text();
+          discountsHtml += `<tr><td class='discount'>${discountName}</td><td>${discountPrice}</td></tr>`;
+        });
+        itemsHtml += "</tbody></table>";
+        $(".discounts").html(discountsHtml);
+
+
+        // Amount Information
+        var totalAmount = $(xml).find("totalAmount").text();
+        var totalDiscount = $(xml).find("totalDiscount").text();
+        var displayAmount = $(xml).find("displayAmount").text();
+        var notCount = $(xml).find("notCount").text();
+        $(".amount-information").html(`<h2>Amount Information</h2><p>Total Amount: ${totalAmount}</p><p>Total Discount: ${totalDiscount}</p><p>Pay Amount: ${displayAmount}</p><p>Not Count: ${notCount}</p>`);
+
+        // Payment Information
+        var paymentMethod = $(xml).find("paymentMethod").text();
+        var refNumber = $(xml).find("refNumber").text();
+        var terminalNumber = $(xml).find("terminalNumber").text();
+        var serialNumber = $(xml).find("serialNumber").text();
+        var authCode = $(xml).find("authCode").text();
+        var checkNumber = $(xml).find("checkNumber").text();
+        var payAmount = $(xml).find("payAmount").text();
+        var dealAmount = $(xml).find("dealAmount").text();
+        $(".payment-information").html(`<h2>Payment Information</h2><p>Payment Amount: ${paymentMethod}</p><p>Reference Number: ${refNumber}</p><p>Terminal Number: ${terminalNumber}</p><p>Serial Number: ${serialNumber}</p><p>Auth Code: ${authCode}</p><p>Check Number: ${checkNumber}</p><p>Pay Amount: ${payAmount}</p><p>Deal Amount: ${dealAmount}</p>`);
+
+        // Other Information
+        var transTime = $(xml).find("transTime").text();
+        var Server = $(xml).find("Server").text();
+        var barcodeNumer = $(xml).find("barcodeNumer").text();
+        
+        var offerInfo = $(xml).find("offerInfo").text();
+        var statement = $(xml).find("statement").text();
+        $(".other-information").html(`<h2>Other Information</h2><p>transTime: ${transTime} by: ${Server}</p><p>Barcode: ${barcodeNumer}</p><canvas id="barcode"></canvas><p>Offer: ${offerInfo}</p><p>Statement: ${statement}</p>`);
+        $("#barcode").JsBarcode(barcodeNumer);
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <h1>Receipt Information</h1>
+
+  <div class="receipt-section">
+    <label for="fileInput">Select XML File:</label>
+    <input type="file" id="fileInput" accept=".xml">
+  </div>
+
+  <div class="branch-information receipt-section"></div>
+  <div class="items-purchased receipt-section"></div>
+  <div class="discounts receipt-section"></div>
+  <div class="amount-information receipt-section"></div>
+  <div class="payment-information receipt-section"></div>
+  <div class="other-information receipt-section"></div>
+
+</body>
+</html>

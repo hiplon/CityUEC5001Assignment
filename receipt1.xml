@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE wellcomereceipt SYSTEM "wellcomereceipt.dtd">
+<wellcomereceipt>
+  <branchName>港湾豪庭</branchName>
+  <branchPhoneNumber>31443783</branchPhoneNumber>
+  <Items>
+    <Item>
+        <itemName>优惠速销</itemName>
+        <itemQuantity>1</itemQuantity>
+        <itemPrice>12</itemPrice>
+    </Item>
+    <Item>
+        <itemName>公仔蒲烧鳗鱼味炒面王</itemName>
+        <itemQuantity>1</itemQuantity>
+        <itemPrice>7</itemPrice>
+    </Item>
+    <Item>
+        <itemName>奇伟果</itemName>
+        <itemQuantity>1</itemQuantity>
+        <itemPrice>3.3</itemPrice>
+    </Item>
+    <Item>
+        <itemName>百福鲜低糖豆浆236ML</itemName>
+        <itemQuantity>1</itemQuantity>
+        <itemPrice>5.5</itemPrice>
+        <applyDiscountType>1</applyDiscountType>
+    </Item>
+    <Item>
+        <itemName>百福无添加糖鲜豆浆236ML</itemName>
+        <itemQuantity>2</itemQuantity>
+        <itemPrice>5.5</itemPrice>
+        <applyDiscountType>1</applyDiscountType>
+    </Item>
+  </Items>
+  <Discounts>
+    <Discount>
+        <discountName>$12.5/3</discountName>
+        <applyDiscountType>1</applyDiscountType>
+        <discountPrice>-4</discountPrice>
+    </Discount>
+  </Discounts>
+  <Amount>
+    <totalAmount>38.8</totalAmount>
+    <totalDiscount>-4</totalDiscount>
+    <displayAmount>34.8</displayAmount>
+    <notCount>0</notCount>
+  </Amount>
+  <Payment>
+    <paymentMethod>WeChatPay</paymentMethod>
+    <refNumber>231016220159</refNumber>
+    <terminalNumber>21351005</terminalNumber>
+    <branchNumber>852111154110001</branchNumber>
+    <serialNumber>030974</serialNumber>
+    <authCode>C09595</authCode>
+    <checkNumber>42000020004202310167601534940</checkNumber>
+    <payAmount>34.8</payAmount>
+    <dealAmount>32.56</dealAmount>
+  </Payment>
+  <transTime>16102023/22:01</transTime>
+  <Server>3512/005/4884/Sze Kuen</Server>
+  <barcodeNumer>1610230002030054884</barcodeNumer>
+  <offerInfo>You can join our XXXX activity for XXXXX.</offerInfo>
+  <statement>some warrenty information and statements</statement>
+</wellcomereceipt> 
